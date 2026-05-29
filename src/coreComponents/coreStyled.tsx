@@ -3,8 +3,6 @@ import { theme } from "../theme";
 
 export const OnboardingMain = styled.main``;
 
-export const Header = styled.main``;
-
 export const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
