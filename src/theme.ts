@@ -1,5 +1,13 @@
 export const theme = {
   colors: {
-    bgColor: "#808080",
+    bgColor: "#F1F0F6",
+    bgHeader: "#FFFFFF",
+    headerBorderColor: "#DAD9E0",
+    bgProgressBarFill: "linear-gradient(90deg, #1fa9c7 0%, #1bb97c 100%)",
+
   },
-};
+} as const;
+
+export type Theme = typeof theme;
+
+export type ThemeColor = Theme["colors"][keyof Theme["colors"]];
