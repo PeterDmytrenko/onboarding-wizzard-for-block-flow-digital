@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { theme, type ThemeColor } from "../../theme";
 import * as S from "./styled";
 
@@ -15,4 +16,4 @@ const ProgressBar = ({ trackBgColor = theme.colors.bgColor }: Props) => {
   );
 };
 
-export default ProgressBar;
+export default memo(ProgressBar);
