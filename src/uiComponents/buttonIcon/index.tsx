@@ -1,22 +1,12 @@
-import { memo, type ComponentProps, type SVGProps } from "react";
+import { memo } from "react";
 import { BUTTON_ICON_COMPONENT } from "./buttonIconComponents";
-import type { ButtonVariant } from "./types";
+import type { BaseButtonIconProps } from "./types";
 
-type BaseProps = {
-  Icon: React.ComponentType<SVGProps<SVGSVGElement>>;
-  customSize?: string | number;
-  customIconSize?: string | number;
-  variant?: ButtonVariant;
-} & ComponentProps<"button">;
-
-export type ButtonIconBaseProps = BaseProps;
-
-const ButtonIcon: React.FC<ButtonIconBaseProps> = (props) => {
+const ButtonIcon = (props: BaseButtonIconProps) => {
   const {
     Icon,
     variant = "transparentLight",
     customSize = "3rem",
-    customIconSize = "1.75rem",
     ...restProps
   } = props;
 
@@ -25,7 +15,6 @@ const ButtonIcon: React.FC<ButtonIconBaseProps> = (props) => {
   return (
     <ButtonIconComponent
       customSize={customSize}
-      customIconSize={customIconSize}
       {...restProps}
     >
       <Icon />

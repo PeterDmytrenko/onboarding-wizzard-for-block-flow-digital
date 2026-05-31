@@ -1,16 +1,13 @@
 import styled from "@emotion/styled";
 import { getCustomSize } from "../../utils/styles";
-import type { ComponentProps } from "react";
 import { theme } from "../../theme";
+import type { BaseButtonIconProps } from "./types";
 
-type BaseButtonProps = {
-  customSize: string | number;
-  customIconSize: string | number;
-} & ComponentProps<"button">;
-
-const BaseButtonRoot = styled.button<BaseButtonProps>`
+const BaseButtonRoot = styled.button<
+  Required<Pick<BaseButtonIconProps, "customSize">>
+>`
   align-items: center;
-  border-radius: ${theme.radius.buttonRadius};
+  border-radius: ${theme.radius.xl};
   border: none;
   color: ${theme.colors.mainTextColor};
   cursor: pointer;
@@ -22,6 +19,11 @@ const BaseButtonRoot = styled.button<BaseButtonProps>`
 
   &:active {
     transform: scale(0.95);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
   }
 `;
 
