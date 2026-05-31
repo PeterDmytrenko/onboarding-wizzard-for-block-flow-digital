@@ -4,7 +4,7 @@ import { getCustomSize } from "../../utils/styles";
 import type { AnimationStepsState } from "./types";
 
 export const OnboardingHeader = styled.header`
-  background-color: ${theme.colors.bgHeader};
+  background-color: ${theme.colors.bgWhite};
   border-bottom: 1px solid ${theme.colors.borderSecondary};
   height: 4.5rem;
   padding-inline: 1.5rem;

@@ -2,7 +2,10 @@ import { useContext } from "react";
 import OnboardingWizardContext from "./OnboardingWizardContext";
 import type { OnboardingWizardFields } from "./types";
 import { validators } from "../../feature/onboarding/wishScreen/wishRadioGroup/utils";
-import { TOTAL_STEPS } from "../../feature/onboarding/constants";
+import {
+  FIELD_WEIGHT_UNIT,
+  TOTAL_STEPS,
+} from "../../feature/onboarding/constants";
 
 export const useOnboardingWizard = () => {
   const ctx = useContext(OnboardingWizardContext);
@@ -13,18 +16,20 @@ export const useOnboardingWizard = () => {
   }
 
   const getFieldError = (
-    key: keyof OnboardingWizardFields
+    key: keyof Omit<OnboardingWizardFields, typeof FIELD_WEIGHT_UNIT>
   ): boolean | string | null => validators[key](ctx.storageFields[key]);
 
-  const isStepValid = (key: keyof OnboardingWizardFields) => {
+  const isStepValid = (
+    key: keyof Omit<OnboardingWizardFields, typeof FIELD_WEIGHT_UNIT>
+  ) => {
     const error = getFieldError(key);
 
     return error === true || error === null;
   };
 
-  const isAllValid = (
-    Object.keys(validators) as (keyof OnboardingWizardFields)[]
-  ).every(isStepValid);
+  // const isAllValid = (
+  //   Object.keys(validators) as (keyof OnboardingWizardFields)[]
+  // ).every(isStepValid);
 
   const goNext = () => {
     if (ctx.currentStep < TOTAL_STEPS) {
@@ -46,7 +51,7 @@ export const useOnboardingWizard = () => {
     setValue: ctx.setField,
     getFieldError,
     isStepValid,
-    isAllValid,
+    // isAllValid,
     goNext,
     goBack,
     isLastStep,

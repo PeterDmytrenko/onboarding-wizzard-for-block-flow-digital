@@ -13,17 +13,20 @@ import {
   FIELD_CURRENT_WEIGHT,
   FIELD_GOAL_WEIGHT,
   FIELD_SELECTED_WISH,
+  FIELD_WEIGHT_UNIT,
+  FORM_CURRENT_WEIGHT,
+  FORM_WISH,
 } from "../feature/onboarding/constants";
 import type { OnboardingWizardFields } from "../context/onboardingWizard/types";
 import type { AnimationStepsState } from "../feature/onboarding/types";
 import { TOTAL_STEPS } from "../feature/onboarding/constants";
 
 const formIdByStep: Record<string, string> = {
-  "1": "wish-form",
-  "2": "current-form",
+  "1": FORM_WISH,
+  "2": FORM_CURRENT_WEIGHT,
 };
 
-const fieldByStep: Record<string, keyof OnboardingWizardFields> = {
+const fieldByStep: Record<string, keyof Omit<OnboardingWizardFields, typeof FIELD_WEIGHT_UNIT>> = {
   "1": FIELD_SELECTED_WISH,
   "2": FIELD_CURRENT_WEIGHT,
   "3": FIELD_GOAL_WEIGHT,
@@ -65,7 +68,8 @@ const OnboardingContent = () => {
     prevStepRef.current = currentStep;
   }, [currentStep]);
 
-  const isDisabled = getFieldError(fieldByStep[String(currentStep)]);
+  const isDisabled = Boolean(getFieldError(fieldByStep[String(currentStep)]));
+  console.log(fieldByStep[String(currentStep)], isDisabled);
   const getProgressPercentage = () => (currentStep / TOTAL_STEPS) * 100;
 
   const renderScreen = useMemo(() => {
@@ -105,7 +109,7 @@ const OnboardingContent = () => {
           form={formIdByStep[String(currentStep)]}
           type="submit"
           label="Continue"
-          disabled={!isDisabled}
+          disabled={isDisabled}
         />
       </FooterActions>
     </ScreenContainer>

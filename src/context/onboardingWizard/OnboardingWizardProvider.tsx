@@ -3,6 +3,8 @@ import {
   FIELD_CURRENT_WEIGHT,
   FIELD_GOAL_WEIGHT,
   FIELD_SELECTED_WISH,
+  FIELD_WEIGHT_UNIT,
+  WEIGHT_UNIT_OPTIONS,
 } from "../../feature/onboarding/constants";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import OnboardingWizardContext from "./OnboardingWizardContext";
@@ -15,6 +17,7 @@ const initialDefaultFields: OnboardingWizardFields = {
   [FIELD_SELECTED_WISH]: "",
   [FIELD_CURRENT_WEIGHT]: "",
   [FIELD_GOAL_WEIGHT]: "",
+  [FIELD_WEIGHT_UNIT]: WEIGHT_UNIT_OPTIONS[0].value,
 };
 
 const OnboardingWizardProvider = ({
@@ -49,6 +52,7 @@ const OnboardingWizardProvider = ({
       [FIELD_SELECTED_WISH]: "",
       [FIELD_CURRENT_WEIGHT]: "",
       [FIELD_GOAL_WEIGHT]: "",
+      [FIELD_WEIGHT_UNIT]: WEIGHT_UNIT_OPTIONS[0].value,
     });
     setCurrentStep(1);
   };

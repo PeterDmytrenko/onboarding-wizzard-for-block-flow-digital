@@ -4,7 +4,7 @@ export const theme = {
   colors: {
     bgColor: "#F1F0F6",
     bgSecondary: "#F8F8FB",
-    bgHeader: "#FFFFFF",
+    bgWhite: "#FFFFFF",
     bgProgressBarFill: "linear-gradient(90deg, #1fa9c7 0%, #1bb97c 100%)",
     greenPrimary: "#1BB97C",
     mainTextColor: "#141415",
@@ -12,6 +12,7 @@ export const theme = {
     borderPrimary: "#F1F0F6",
     borderSecondary: "#DAD9E0",
     primaryLinearGradient: "linear-gradient(90deg, #1fa9c7 0%, #1bb97c 100%)"
+
   },
   transitions: {
     default: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",

@@ -10,6 +10,7 @@ const BaseButtonRoot = styled.button<BaseButtonProps>`
   align-items: center;
   border-radius: ${theme.radius.lg};
   border: none;
+  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.08);
   color: ${theme.colors.textLight};
   cursor: pointer;
   display: flex;
