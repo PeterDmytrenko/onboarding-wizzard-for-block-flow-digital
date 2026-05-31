@@ -1,16 +1,15 @@
 import { memo } from "react";
-import { theme, type ThemeColor } from "../../theme";
 import * as S from "./styled";
 
 type Props = {
-  trackBgColor?: ThemeColor;
+  percents: number;
 };
 
-const ProgressBar = ({ trackBgColor = theme.colors.bgColor }: Props) => {
+const ProgressBar = ({ percents }: Props) => {
   return (
     <S.ProgressBarRoot>
-      <S.ProgressBarTrack trackBgColor={trackBgColor}>
-        <S.ProgressBarFill percent={45} />
+      <S.ProgressBarTrack>
+        <S.ProgressBarFill percents={percents} />
       </S.ProgressBarTrack>
     </S.ProgressBarRoot>
   );
