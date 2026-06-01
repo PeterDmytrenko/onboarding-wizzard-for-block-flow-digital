@@ -1,32 +1,70 @@
-import { useCallback } from "react";
 import SwitchRadioGroup from "../../../uiComponents/switchRadioGroup";
 import { useOnboardingWizard } from "../../../context/onboardingWizard/useOnboardingWizard";
-import { FIELD_CURRENT_WEIGHT, FIELD_WEIGHT_UNIT, WEIGHT_UNIT_OPTIONS } from "../constants";
-import type { OnboardingWizardFields } from "../../../context/onboardingWizard/types";
+import {
+  FIELD_CURRENT_WEIGHT,
+  FORM_CURRENT_WEIGHT,
+  WEIGHT_UNIT_OPTIONS,
+} from "../constants";
+import InputWithSuffix from "../../../uiComponents/inputWithSuffix";
+import { FormStyled } from "../wishScreen/styled";
+import { ExternalInputWrapper } from "../styled";
+import { ErrorMessage } from "../../../uiComponents/inputWithSuffix/styled";
+import { getErrorMessageByWeightUnit } from "../../../utils/onboarding";
+import type { SyntheticEvent } from "react";
+import { TitleTag } from "../../../uiComponents/title/types";
+import Title from "../../../uiComponents/title";
+import HighlightText from "../../../uiComponents/textWithPartlyHightligh";
+import { theme } from "../../../theme";
 
 const CurrentWeightScreen = () => {
-  const { goNext, getFieldError, setValue, fields } = useOnboardingWizard();
+  const { goNext, setValue, fields, handleWeightUnitChange, errors } =
+    useOnboardingWizard();
 
-  const onSubmit = useCallback(
-    (e: SubmitEvent) => {
-      e.preventDefault();
+  const onChangeInput = (value: string) => {
+    setValue(FIELD_CURRENT_WEIGHT, value);
+  };
 
-      if (!getFieldError(FIELD_CURRENT_WEIGHT)) {
-        goNext();
-      }
-    },
-    [getFieldError, goNext]
-  );
+  const onSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    goNext();
+  };
+
+  const errorMessage = getErrorMessageByWeightUnit(fields.weightUnit);
 
   return (
-    <form>
-      <SwitchRadioGroup<OnboardingWizardFields>
+    <FormStyled id={FORM_CURRENT_WEIGHT} onSubmit={onSubmit}>
+      <Title
+        tag={TitleTag.H2}
+        minFontSize={1.625}
+        preferredFontSize={2}
+        maxFontSize={2.25}
+      >
+        <HighlightText
+          text="What is your goal weight?"
+          highlightText="goal"
+          highlightColor={theme.colors.greenAccent}
+        />
+      </Title>
+      <SwitchRadioGroup
         value={fields.weightUnit}
-        onChange={setValue}
+        handleChange={handleWeightUnitChange}
         options={WEIGHT_UNIT_OPTIONS}
-        name={FIELD_WEIGHT_UNIT}
       />
-    </form>
+      <ExternalInputWrapper>
+        <InputWithSuffix
+          handleChange={onChangeInput}
+          value={fields.currentWeight}
+          placeholder="Weight"
+          suffix={fields.weightUnit}
+          hasError={errors.currentWeight}
+        />
+
+        <ErrorMessage hasError={errors.currentWeight}>
+          {errorMessage}
+        </ErrorMessage>
+      </ExternalInputWrapper>
+    </FormStyled>
   );
 };
 

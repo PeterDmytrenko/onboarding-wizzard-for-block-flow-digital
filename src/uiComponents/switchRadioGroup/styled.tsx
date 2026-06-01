@@ -7,8 +7,9 @@ export const SwitchRadioGroupRoot = styled.div`
   box-shadow: 1px 1px 8px 2px rgba(0, 0, 0, 0.04);
   display: inline-grid;
   grid-auto-flow: column;
-  padding: 4px 6px;
+  padding: 0.25rem 0.375rem;
   position: relative;
+  margin-top: 4rem;
 `;
 
 export const SwitchRadioGroupThumb = styled.div<{
@@ -52,7 +53,7 @@ export const SwitchRadioGroupItemLabelText = styled.span<{
   color: ${({ active }) =>
     active ? theme.colors.textLight : theme.colors.mainTextColor};
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.25;
   transition: color 250ms ease;
 `;

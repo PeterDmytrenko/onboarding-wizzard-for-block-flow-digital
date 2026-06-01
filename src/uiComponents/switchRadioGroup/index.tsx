@@ -2,14 +2,22 @@ import { memo } from "react";
 import * as S from "./styled";
 import type { Option } from "./types";
 
-type Props<T> = {
+type Props = {
   options: Array<Option>;
   value: string;
-  onChange: (key: keyof T, value: string) => void;
-  name: keyof T;
+  handleChange: (value: string, key?: string) => void;
+  name?: string;
 };
 
-const SwitchRadioGroup = <T,>({ options, value, onChange, name }: Props<T>) => {
+const SwitchRadioGroup = ({ options, value, handleChange, name }: Props) => {
+  const onChange = (value: string) => {
+    if (name) {
+      handleChange(value, name);
+    } else {
+      handleChange(value);
+    }
+  };
+
   const activeIndex = options.findIndex((option) => option.value === value);
 
   return (
@@ -28,7 +36,7 @@ const SwitchRadioGroup = <T,>({ options, value, onChange, name }: Props<T>) => {
               type="radio"
               value={option.value}
               checked={isActive}
-              onChange={() => onChange(name, option.value)}
+              onChange={() => onChange(option.value)}
             />
 
             <S.SwitchRadioGroupItemLabelText active={isActive}>
