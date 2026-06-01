@@ -6,6 +6,7 @@ type Props = {
   optionData: WishOption;
   isChecked: boolean;
   onChangeRadioGroup: (id: string) => void;
+  name?: string;
 };
 
 const WishRadioButton = (props: Props) => {
@@ -13,6 +14,7 @@ const WishRadioButton = (props: Props) => {
     optionData: { id, emoji, label },
     isChecked,
     onChangeRadioGroup,
+    name = "",
   } = props;
 
   const onChange = useCallback(
@@ -26,7 +28,7 @@ const WishRadioButton = (props: Props) => {
     <S.WishRadioButtonLabel isSelected={isChecked}>
       <S.HiddenRadio
         type="radio"
-        name="main-wish"
+        name={name}
         value={id}
         checked={isChecked}
         onChange={onChange}

@@ -1,8 +1,12 @@
 import { useContext } from "react";
 import OnboardingWizardContext from "./OnboardingWizardContext";
-import type { OnboardingWizardFields } from "./types";
-import { validators } from "../../feature/onboarding/wishScreen/wishRadioGroup/utils";
-import { TOTAL_STEPS } from "../../feature/onboarding/constants";
+import {
+  FIELD_CURRENT_WEIGHT,
+  FIELD_GOAL_WEIGHT,
+  FIELD_SELECTED_WISH,
+  FIELD_WEIGHT_UNIT,
+  TOTAL_STEPS,
+} from "../../feature/onboarding/constants";
 
 export const useOnboardingWizard = () => {
   const ctx = useContext(OnboardingWizardContext);
@@ -12,22 +16,25 @@ export const useOnboardingWizard = () => {
     );
   }
 
-  const getFieldError = (
-    key: keyof OnboardingWizardFields
-  ): boolean | string | null => validators[key](ctx.storageFields[key]);
+  const isStepValid = (step: number) => {
+    if (step === 1) {
+      return !ctx.errors[FIELD_SELECTED_WISH];
+    }
+    if (step === 2) {
+      return !(
+        ctx.errors[FIELD_WEIGHT_UNIT] || ctx.errors[FIELD_CURRENT_WEIGHT]
+      );
+    }
 
-  const isStepValid = (key: keyof OnboardingWizardFields) => {
-    const error = getFieldError(key);
+    if (step === 3) {
+      return !(ctx.errors[FIELD_WEIGHT_UNIT] || ctx.errors[FIELD_GOAL_WEIGHT]);
+    }
 
-    return error === true || error === null;
+    return true;
   };
 
-  const isAllValid = (
-    Object.keys(validators) as (keyof OnboardingWizardFields)[]
-  ).every(isStepValid);
-
   const goNext = () => {
-    if (ctx.currentStep < TOTAL_STEPS) {
+    if (ctx.currentStep < TOTAL_STEPS && isStepValid(ctx.currentStep)) {
       ctx.setCurrentStep(ctx.currentStep + 1);
     }
   };
@@ -44,12 +51,12 @@ export const useOnboardingWizard = () => {
     fields: ctx.storageFields,
     currentStep: ctx.currentStep,
     setValue: ctx.setField,
-    getFieldError,
     isStepValid,
-    isAllValid,
+    handleWeightUnitChange: ctx.handleWeightUnitChange,
     goNext,
     goBack,
     isLastStep,
     reset: ctx.storageFields,
+    errors: ctx.errors,
   };
 };

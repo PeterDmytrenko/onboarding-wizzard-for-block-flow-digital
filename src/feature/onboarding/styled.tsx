@@ -4,7 +4,7 @@ import { getCustomSize } from "../../utils/styles";
 import type { AnimationStepsState } from "./types";
 
 export const OnboardingHeader = styled.header`
-  background-color: ${theme.colors.bgHeader};
+  background-color: ${theme.colors.bgWhite};
   border-bottom: 1px solid ${theme.colors.borderSecondary};
   height: 4.5rem;
   padding-inline: 1.5rem;
@@ -53,4 +53,32 @@ export const ContentWrapper = styled.div<{ direction: AnimationStepsState }>`
 
 export const EmptyBlock = styled.div<{ size: string | number }>`
   ${({ size }) => getCustomSize(size)}
+`;
+
+export const ExternalInputWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+`
+
+export const ScreenContainer = styled.section`
+  background-color: #f9f9fa;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  min-height: 100vh;
+  padding-top: env(safe-area-inset-top, 0px);
+  width: 100%;
+`;
+
+export const FooterActions = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  padding: 40px;
+  width: 100%;
 `;

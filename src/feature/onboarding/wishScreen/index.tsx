@@ -1,27 +1,22 @@
-import { useCallback, type SubmitEvent } from "react";
+import { type SyntheticEvent } from "react";
 import WishRadioGroup from "./wishRadioGroup";
 import { useOnboardingWizard } from "../../../context/onboardingWizard/useOnboardingWizard";
-import { FIELD_SELECTED_WISH } from "../constants";
+import { FIELD_SELECTED_WISH, FORM_WISH } from "../constants";
 import Title from "../../../uiComponents/title";
 import { TitleTag } from "../../../uiComponents/title/types";
 import { FormStyled } from "./styled";
 
 const WishScreen = () => {
-  const { goNext, getFieldError, setValue, fields } = useOnboardingWizard();
+  const { goNext, setValue, fields } = useOnboardingWizard();
 
-  const onSubmit = useCallback(
-    (e: SubmitEvent) => {
-      e.preventDefault();
+  const onSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      if (getFieldError(FIELD_SELECTED_WISH)) {
-        goNext();
-      }
-    },
-    [getFieldError, goNext]
-  );
+    goNext();
+  };
 
   return (
-    <FormStyled id="wish-form" onSubmit={onSubmit}>
+    <FormStyled id={FORM_WISH} onSubmit={onSubmit}>
       <Title
         tag={TitleTag.H2}
         minFontSize={1.625}
