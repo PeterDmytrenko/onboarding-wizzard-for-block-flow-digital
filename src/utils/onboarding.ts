@@ -51,3 +51,19 @@ const WEIGHT_RANGE: Record<WeightUnit, { min: number; max: number }> = {
 export const getErrorMessageByWeightUnit = (weightUnit: WeightUnit) => {
   return `Please enter a value between ${WEIGHT_RANGE[weightUnit].min} ${weightUnit} and ${WEIGHT_RANGE[weightUnit].max} ${weightUnit}`;
 };
+
+export const getWeightMessage = (currentWeight: string, goalWeight: string) => {
+  const current = Number(currentWeight);
+  const goal = Number(goalWeight);
+
+  const diffPercent = ((current - goal) / goal) * 100;
+
+  if (diffPercent === 0) {
+    return "Your weight has remained unchanged";
+  }
+  if (diffPercent < 0) {
+    return `Goal: Gain ${Math.abs(diffPercent).toFixed(1)}% of your weight`;
+  } else {
+    return `Goal: Lose ${diffPercent.toFixed(1)}% of your weight`;
+  }
+};

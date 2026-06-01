@@ -25,6 +25,7 @@ export const WEIGHT_UNIT_OPTIONS: Array<WeightOption> = [
 
 export const FORM_WISH = "wish-form";
 export const FORM_CURRENT_WEIGHT = "current-weight-form";
+export const FORM_GOAL_WEIGHT = "goal-weight-form";
 
 export const KG_TO_LBS = 2.20462;
 

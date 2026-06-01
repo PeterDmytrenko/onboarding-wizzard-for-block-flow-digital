@@ -41,8 +41,8 @@ const CurrentWeightScreen = () => {
         maxFontSize={2.25}
       >
         <HighlightText
-          text="What is your goal weight?"
-          highlightText="goal"
+          text="What is your current weight?"
+          highlightText="current"
           highlightColor={theme.colors.greenAccent}
         />
       </Title>

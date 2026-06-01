@@ -27,6 +27,7 @@ export const theme = {
   radius: {
     xl: "1rem",
     lg: "0.75rem",
+    sm: "0.375rem",
   },
 } as const;
 
