@@ -1,6 +1,7 @@
 import type { WeightOption, WishOption } from "./types";
 
-export const TOTAL_STEPS = 3;
+export const TOTAL_STEPS = 4;
+export const TOTAL_STEPS_WITH_PROGRESS = 3;
 
 export const FIELD_SELECTED_WISH = "selectedWish";
 export const FIELD_CURRENT_WEIGHT = "currentWeight";
@@ -34,3 +35,7 @@ export const MAX_KG_WEIGHT = 200;
 export const MIN_LBS_WEIGHT = 22;
 export const MAX_LBS_WEIGHT = 485;
 
+export const CIRCLE_PROGRESS_CONFIG = {
+  radius: 100,
+  strokeWidth: 10,
+} as const;

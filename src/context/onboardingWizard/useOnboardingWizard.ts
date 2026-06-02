@@ -18,16 +18,25 @@ export const useOnboardingWizard = () => {
 
   const isStepValid = (step: number) => {
     if (step === 1) {
-      return !ctx.errors[FIELD_SELECTED_WISH];
+      return !(
+        ctx.errors[FIELD_SELECTED_WISH] ||
+        !ctx.storageFields[FIELD_SELECTED_WISH]
+      );
     }
     if (step === 2) {
       return !(
-        ctx.errors[FIELD_WEIGHT_UNIT] || ctx.errors[FIELD_CURRENT_WEIGHT]
+        ctx.errors[FIELD_WEIGHT_UNIT] ||
+        ctx.errors[FIELD_CURRENT_WEIGHT] ||
+        !ctx.storageFields[FIELD_CURRENT_WEIGHT]
       );
     }
 
     if (step === 3) {
-      return !(ctx.errors[FIELD_WEIGHT_UNIT] || ctx.errors[FIELD_GOAL_WEIGHT]);
+      return !(
+        ctx.errors[FIELD_WEIGHT_UNIT] ||
+        ctx.errors[FIELD_GOAL_WEIGHT] ||
+        !ctx.storageFields[FIELD_GOAL_WEIGHT]
+      );
     }
 
     return true;
@@ -45,8 +54,6 @@ export const useOnboardingWizard = () => {
     }
   };
 
-  const isLastStep = ctx.currentStep === TOTAL_STEPS;
-
   return {
     fields: ctx.storageFields,
     currentStep: ctx.currentStep,
@@ -55,8 +62,7 @@ export const useOnboardingWizard = () => {
     handleWeightUnitChange: ctx.handleWeightUnitChange,
     goNext,
     goBack,
-    isLastStep,
-    reset: ctx.storageFields,
+    reset: ctx.reset,
     errors: ctx.errors,
   };
 };
