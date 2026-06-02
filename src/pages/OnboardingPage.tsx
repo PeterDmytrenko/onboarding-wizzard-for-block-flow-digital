@@ -10,19 +10,22 @@ import CurrentWeightScreen from "../feature/onboarding/currentWeightScreen";
 import Button from "../uiComponents/button";
 import {
   FORM_CURRENT_WEIGHT,
+  FORM_GOAL_WEIGHT,
   FORM_WISH,
+  TOTAL_STEPS_WITH_PROGRESS,
 } from "../feature/onboarding/constants";
 import type { AnimationStepsState } from "../feature/onboarding/types";
-import { TOTAL_STEPS } from "../feature/onboarding/constants";
 import GoalWeightScreen from "../feature/onboarding/goalWeightScreen";
+import ResultScreen from "../feature/onboarding/resultScreen";
 
 const formIdByStep: Record<string, string> = {
   "1": FORM_WISH,
   "2": FORM_CURRENT_WEIGHT,
+  "3": FORM_GOAL_WEIGHT,
 };
 
 const OnboardingContent = () => {
-  const { currentStep, goBack, isStepValid } = useOnboardingWizard();
+  const { currentStep, goBack, isStepValid, errors } = useOnboardingWizard();
 
   const [direction, setDirection] = useState<AnimationStepsState>("forward");
   const prevStepRef = useRef<number>(currentStep);
@@ -39,7 +42,8 @@ const OnboardingContent = () => {
 
   const isDisabled = !isStepValid(currentStep);
 
-  const getProgressPercentage = () => (currentStep / TOTAL_STEPS) * 100;
+  const getProgressPercentage = () =>
+    (currentStep / TOTAL_STEPS_WITH_PROGRESS) * 100;
 
   const renderScreen = useMemo(() => {
     switch (currentStep) {
@@ -49,6 +53,8 @@ const OnboardingContent = () => {
         return <CurrentWeightScreen />;
       case 3:
         return <GoalWeightScreen />;
+      case 4:
+        return <ResultScreen />;
       default:
         <WishScreen />;
     }
@@ -56,31 +62,35 @@ const OnboardingContent = () => {
   return (
     <S.ScreenContainer>
       <S.OnboardingHeader>
-        <S.OnboardingHeaderInner>
-          {currentStep === 1 ? (
+        {currentStep <= TOTAL_STEPS_WITH_PROGRESS && (
+          <S.OnboardingHeaderInner>
+            {currentStep === 1 ? (
+              <S.EmptyBlock size="3rem" />
+            ) : (
+              <ButtonIcon Icon={ChevronLeft} onClick={goBack} />
+            )}
+
+            <ProgressBar percents={getProgressPercentage()} />
+
             <S.EmptyBlock size="3rem" />
-          ) : (
-            <ButtonIcon Icon={ChevronLeft} onClick={goBack} />
-          )}
-
-          <ProgressBar percents={getProgressPercentage()} />
-
-          <S.EmptyBlock size="3rem" />
-        </S.OnboardingHeaderInner>
+          </S.OnboardingHeaderInner>
+        )}
       </S.OnboardingHeader>
 
       <S.ContentWrapper key={currentStep} direction={direction}>
         {renderScreen}
       </S.ContentWrapper>
 
-      <S.FooterActions>
-        <Button
-          form={formIdByStep[String(currentStep)]}
-          type="submit"
-          label="Continue"
-          disabled={isDisabled}
-        />
-      </S.FooterActions>
+      {currentStep <= TOTAL_STEPS_WITH_PROGRESS && (
+        <S.FooterActions>
+          <Button
+            form={formIdByStep[String(currentStep)]}
+            type="submit"
+            label="Continue"
+            disabled={isDisabled}
+          />
+        </S.FooterActions>
+      )}
     </S.ScreenContainer>
   );
 };
